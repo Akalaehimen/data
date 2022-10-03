@@ -17,8 +17,8 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
 
-# ...
 
+# ...
 class Student(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     firstname = db.Column(db.String(100), nullable=False)
@@ -31,26 +31,27 @@ class Student(db.Model):
 
     def __repr__(self):
         return f'<Student {self.firstname}>'
-        
-        # ...
-    @app.route('/')
-    def index():
+
+
+# ...
+@app.route('/')
+def index():
     #    student = Student.query.filter_by(email = email).first()
-        return render_template('base.html')
+    return render_template('index.html')
         
+
+@app.route('/login')
+def login():
+    pass
+
+
+@app.route('/signup')
+def signup():
+    pass
+
     
-
-    @app.route('/login')
-    def login(): 
-        pass
-
-    @app.route('/signup')
-    def signup():
-        pass
-
-    
-    if __name__=='__main__':
-     app.run(debug=True)
+if __name__=='__main__':
+    app.run(debug=True)
 
     
 

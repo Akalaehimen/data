@@ -4,18 +4,23 @@
     margin: 0;
     box-sizing: border-box;
    }
-   a{
-       text-decoration: white;
+   .nav_items a{
+       text-decoration: none;
+       color: white;
+       text-transform: uppercase;
+       padding: 0 1rem;
    }
    header{
        background-color: black;
-       padding: 10px;
        color: white;
        display: flex;
+       align-items: center;
        justify-content: space-between;
+       padding: 1rem 3rem;
    }
    .logo a{
        color: white;
+       text-decoration: none;
    }
    .nav-items{
        width: 80%;
@@ -27,9 +32,8 @@
    
    }
    footer{
-       padding: 20px;
        background-color: black;
-       color: white;
+       margin-top: 3rem;
    }
    .message{
        color: red;
@@ -62,11 +66,36 @@
    }
    
    
-   
-   
-   
-   
-   
-   
-   
-   
+.footer div{
+    display: flex;
+    flex-direction: column;
+    padding: .6rem 7rem;
+    margin-bottom: 2rem;
+}
+
+footer div a{
+    padding: 1rem;
+    color: white;
+    text-decoration: none;
+
+}
+
+.footer{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+footer h2{
+    color: white;
+    text-align: center;
+    padding: 2rem 0;
+    text-transform: uppercase;
+}
+
+hr{
+    width: 60rem;
+    margin: auto;
+    margin-bottom: 2rem;
+    border: 1px solid grey;
+}
