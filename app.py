@@ -1,3 +1,4 @@
+
 from datetime import datetime
 import email
 from email.policy import default
@@ -5,6 +6,7 @@ import os
 from re import S
 from flask import Flask, render_template, request, url_for, redirect
 from flask_sqlalchemy import SQLAlchemy
+from werkzeug.security import generate_password_hash, check_password_hash
 
 from sqlalchemy.sql import func
 
@@ -31,22 +33,55 @@ class Student(db.Model):
 
     def __repr__(self):
         return f'<Student {self.firstname}>'
-
-
+    
 # ...
 @app.route('/')
 def index():
     #    student = Student.query.filter_by(email = email).first()
     return render_template('index.html')
-        
+    # return '<h1>Welcome</h1
 
-@app.route('/login')
+
+@app.route('/signup', methods=['GET', 'POST'])
+def register():
+    if request.method == 'post' :
+        firstname = request.form.get('firstname')
+        email = request.form.get('email')
+        password = request.form.get('password')
+        confirm_password = request.form.get('confirm_password')
+    
+        student = Student.query.filter_by(firstname=firstname).first()
+
+        if student:
+            return redirect(url_for('register'))
+
+        email_exists = Student.query.filter_by(email=email).first()
+        if email_exists:
+             return redirect(url_for('register'))
+
+        password_hash = generate_password_hash(password)
+        if password_hash:
+             return redirect(url_for('register'))
+
+        confirm = check_password_hash(confirm_password)
+        if confirm:
+            return redirect(url_for('register'))
+
+        new_student = Student(firstname=firstname, email=email, password_hash=password_hash)
+        db.session.add(new_student)
+        db.session.commit
+
+        return redirect(url_for('index'))
+
+    return render_template('signup.html')
+
+@app.route('/login', methods=['GET', 'POST'])
 def login():
     pass
 
 
-@app.route('/signup')
-def signup():
+@app.route('/logout')
+def logout():
     pass
 
     
@@ -54,15 +89,6 @@ if __name__=='__main__':
     app.run(debug=True)
 
     
-
-
-
-
-
-
-
-
-
 
 
 
