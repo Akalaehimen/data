@@ -19,18 +19,19 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SECRET_KEY']='72e8e98dd2e76fe548ea3372'
 
 db = SQLAlchemy(app)
+db.init_app(app)
 
 Login_manager = LoginManager(app)
 # ...
 class Student(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     firstname = db.Column(db.String(100), nullable=False)
-    lastname = db.Column(db.String(100), nullable=False)
+    # lastname = db.Column(db.String(100), nullable=False)
     email = db.Column(db.String(80), unique=True, nullable=False)
     password_hash = db.Column(db.Text, nullable=False )
-    age = db.Column(db.Integer)
-    created_at = db.Column(db.DateTime,default=datetime.utcnow)
-    bio = db.Column(db.Text)
+    # age = db.Column(db.Integer)
+    # created_at = db.Column(db.DateTime,default=datetime.utcnow)
+    # bio = db.Column(db.Text)
 
     def __repr__(self):
         return f'<Student {self.firstname}>'
@@ -87,7 +88,7 @@ def login():
     
     student= Student.query.filter_by(firstname=firstname).first()
 
-    if Student and check_password_hash(Student.password_hash, password):
+    if student and check_password_hash(student.password_hash, password):
         login_user(student)
         return redirect(url_for('index'))
 
